@@ -8,22 +8,59 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
+    private Button[][] buttons = new Button[4][4];
+    private int score;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        /*loatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+        //storing all of my buttons in an array
+        for(int i =0; i < 4; i++){
+            for(int j = 0; j<4; j++){
+                String buttonID = "button_" + i + j;    //since all my tiles start with button_xy we store the id on a string
+                int resID = getResources().getIdentifier(buttonID, "id", getPackageName()); //the id of the button
+                buttons[i][j] = findViewById(resID);
+                buttons[i][j].setText("0");
             }
-        });*/
+        }
+        Button buttonUp = findViewById(R.id.button_up);
+        Button buttonDown = findViewById(R.id.button_down);
+        Button buttonLeft = findViewById(R.id.button_left);
+        Button buttonRight = findViewById(R.id.button_right);
+
+        buttonUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
+        buttonDown.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        buttonLeft.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        buttonRight.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+    }
+    @Override
+    public void onClick(View v){
+
     }
 
     @Override
