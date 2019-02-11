@@ -10,6 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Button[][] buttons = new Button[4][4];
@@ -31,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button buttonDown = findViewById(R.id.button_down);
         Button buttonLeft = findViewById(R.id.button_left);
         Button buttonRight = findViewById(R.id.button_right);
-
+        generate();
         buttonUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,12 +59,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+
     }
     @Override
     public void onClick(View v){
 
     }
+    public void generate(){
+        int row,row2, col,col2;
+        Random rand = new Random();
+        row = rand.nextInt(3);
+        col = rand.nextInt(3);
+        buttons[row][col].setText("2");
 
+        row2 = rand.nextInt(3);
+        col2 = rand.nextInt(3);
+        if((row == row2) && (col == col2))
+        {
+            while((row == row2) && (col == col2)){
+                row2 = rand.nextInt(3);
+                col2 = rand.nextInt(3);
+            }
+        }
+        buttons[row2][col2].setText(("4"));
+
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
