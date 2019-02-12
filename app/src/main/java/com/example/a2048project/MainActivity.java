@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 int resID = getResources().getIdentifier(buttonID, "id", getPackageName()); //the id of the button
                 buttons[i][j] = findViewById(resID);
                 buttons[i][j].setText("0");
+                arr[i][j] = 0;
             }
         }
         Button buttonUp = findViewById(R.id.button_up);
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonLeft.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
+                left();
             }
         });
         buttonRight.setOnClickListener(new View.OnClickListener(){
@@ -80,8 +81,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         row = rand.nextInt(3);
         col = rand.nextInt(3);
         int two_four = rand.nextInt(3);
-        if (two_four == 0) buttons[row][col].setText("2");
-        else buttons[row][col].setText("4");
+        if (two_four == 0) {
+            buttons[row][col].setText("2");
+            arr[row][col] = 2;
+        }
+        else{
+            buttons[row][col].setText("4");
+            arr[row][col] = 4;
+        }
         row2 = rand.nextInt(3);
         col2 = rand.nextInt(3);
         if((row == row2) && (col == col2))
@@ -92,14 +99,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
         two_four = rand.nextInt(3);
-        if (two_four == 0) buttons[row2][col2].setText("2");
-        else buttons[row2][col2].setText("4");
+        if (two_four > 0){
+            buttons[row2][col2].setText("2");
+            arr[row2][col2] = 2;
 
+        }
+        else{
+            buttons[row2][col2].setText("4");
+            arr[row2][col2] = 4;
+        }
     }
 
     public void restart(){
         finish();
         startActivity(getIntent());
+    }
+    public void left(){
+        moveLeft();
+
+    }
+    public void moveLeft(){
+        for(int i =0; i < 4; i++){
+            for(int j = 0; j<4; j++) {
+                int track = j;
+                if(j > 0 && arr[i][j] != 0)
+                {
+                    while (track > 0 && arr[i][track] != 0) {
+                        if (arr[i][track - 1] == 0)
+                        {
+                            arr[i][track - 1] = arr[i][track];
+                            arr[i][track] = 0;
+                        }
+                        track--;
+                    }
+                }
+            }
+            for(int index = 0; index < 4; index++) buttons[i][index].setText(""+arr[i][index]);
+        }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
