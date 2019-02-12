@@ -15,6 +15,8 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Button[][] buttons = new Button[4][4];
+    private int [][] arr = new int[4][4];
+    private Button buttonNewGame;
     private int score;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +35,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button buttonDown = findViewById(R.id.button_down);
         Button buttonLeft = findViewById(R.id.button_left);
         Button buttonRight = findViewById(R.id.button_right);
+        buttonNewGame = findViewById(R.id.button_newGame);
         generate();
+        buttonNewGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                restart();
+            }
+        });
         buttonUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,8 +79,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Random rand = new Random();
         row = rand.nextInt(3);
         col = rand.nextInt(3);
-        buttons[row][col].setText("2");
-
+        int two_four = rand.nextInt(3);
+        if (two_four == 0) buttons[row][col].setText("2");
+        else buttons[row][col].setText("4");
         row2 = rand.nextInt(3);
         col2 = rand.nextInt(3);
         if((row == row2) && (col == col2))
@@ -81,8 +91,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 col2 = rand.nextInt(3);
             }
         }
-        buttons[row2][col2].setText(("4"));
+        two_four = rand.nextInt(3);
+        if (two_four == 0) buttons[row2][col2].setText("2");
+        else buttons[row2][col2].setText("4");
 
+    }
+
+    public void restart(){
+        finish();
+        startActivity(getIntent());
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

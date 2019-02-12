@@ -11,8 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight = ".5">
-
+        android:layout_weight = ".1">
 
         <TextView
             android:id="@+id/text_view_2048"
@@ -21,53 +20,40 @@
             android:text="2048"
             android:textSize="80sp" />
 
-        <Button
-            android:id="@+id/button_up"
-            android:layout_width="57dp"
-            android:layout_height="57dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="169dp"
-            android:background="@drawable/arrow"
-            android:rotation="90"
-            android:text="up" />
+        <TextView
+            android:id="@+id/text_view_2048Description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below = "@+id/text_view_2048"
+            android:textColor="#000000"
+            android:text="Play 2048! Will you suceed?\n Can you get to the 2048 tile?"
+            android:textSize="15dp" />
 
         <Button
-            android:id="@+id/button_down"
-            android:layout_width="57dp"
-            android:layout_height="57dp"
-            android:layout_alignBottom="@id/button_up"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="173dp"
-            android:layout_marginBottom="-120dp"
-            android:background="@drawable/arrow"
-            android:rotation="270"
-            android:text="down" />
-
-        <Button
-            android:id="@+id/button_left"
-            android:layout_width="57dp"
-            android:layout_height="57dp"
-            android:layout_alignBottom="@id/button_up"
+            android:id="@+id/button_score"
+            android:layout_width="68dp"
+            android:layout_height="60dp"
             android:layout_alignParentEnd="true"
             android:layout_marginLeft="-136dp"
-            android:layout_marginEnd="236dp"
-            android:layout_marginBottom="-120dp"
-            android:background="@drawable/arrow"
-            android:text="Left" />
-
-        <Button
-            android:id="@+id/button_right"
-            android:layout_width="57dp"
-            android:layout_height="57dp"
-            android:layout_alignBottom="@id/button_up"
-            android:layout_alignParentEnd="true"
-            android:layout_marginLeft="-136dp"
-            android:layout_marginEnd="108dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginBottom="-120dp"
-            android:background="@drawable/arrow"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="-57dp"
             android:rotation="180"
-            android:text="Right" />
+            android:background="@color/SCOREBUTBG" />
+
+        <Button
+            android:id="@+id/button_newGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/button_score"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="-136dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="-78dp"
+            android:text = "New Game"
+            android:textColor="#ffffff"
+            android:background="@color/BUTBG" />
+
     </RelativeLayout>
 
     <LinearLayout
@@ -79,23 +65,27 @@
             android:layout_width = "0dp"
             android:layout_height = "match_parent"
             android:layout_weight = "1"
+            android:background="@color/BUTBG"
             android:textSize = "60sp"/>
         <Button
             android:id = "@+id/button_01"
             android:layout_width = "0dp"
             android:layout_height = "match_parent"
+            android:background="@color/BUTBG"
             android:layout_weight = "1"
             android:textSize = "60sp"/>
         <Button
             android:id = "@+id/button_02"
             android:layout_width = "0dp"
             android:layout_height = "match_parent"
+            android:background="@color/BUTBG"
             android:layout_weight = "1"
             android:textSize = "60sp"/>
         <Button
             android:id = "@+id/button_03"
             android:layout_width = "0dp"
             android:layout_height = "match_parent"
+            android:background="@color/BUTBG"
             android:layout_weight = "1"
             android:textSize = "60sp"/>
     </LinearLayout>
@@ -108,24 +98,28 @@
             android:id = "@+id/button_10"
             android:layout_width = "0dp"
             android:layout_height = "match_parent"
+            android:background="@color/BUTBG"
             android:layout_weight = "1"
             android:textSize = "60sp"/>
         <Button
             android:id = "@+id/button_11"
             android:layout_width = "0dp"
             android:layout_height = "match_parent"
+            android:background="@color/BUTBG"
             android:layout_weight = "1"
             android:textSize = "60sp"/>
         <Button
             android:id = "@+id/button_12"
             android:layout_width = "0dp"
             android:layout_height = "match_parent"
+            android:background="@color/BUTBG"
             android:layout_weight = "1"
             android:textSize = "60sp"/>
         <Button
             android:id = "@+id/button_13"
             android:layout_width = "0dp"
             android:layout_height = "match_parent"
+            android:background="@color/BUTBG"
             android:layout_weight = "1"
             android:textSize = "60sp"/>
     </LinearLayout>
@@ -138,24 +132,28 @@
             android:id = "@+id/button_20"
             android:layout_width = "0dp"
             android:layout_height = "match_parent"
+            android:background="@color/BUTBG"
             android:layout_weight = "1"
             android:textSize = "60sp"/>
         <Button
             android:id = "@+id/button_21"
             android:layout_width = "0dp"
             android:layout_height = "match_parent"
+            android:background="@color/BUTBG"
             android:layout_weight = "1"
             android:textSize = "60sp"/>
         <Button
             android:id = "@+id/button_22"
             android:layout_width = "0dp"
             android:layout_height = "match_parent"
+            android:background="@color/BUTBG"
             android:layout_weight = "1"
             android:textSize = "60sp"/>
         <Button
             android:id = "@+id/button_23"
             android:layout_width = "0dp"
             android:layout_height = "match_parent"
+            android:background="@color/BUTBG"
             android:layout_weight = "1"
             android:textSize = "60sp"/>
     </LinearLayout>
@@ -168,16 +166,19 @@
             android:id = "@+id/button_30"
             android:layout_width = "0dp"
             android:layout_height = "match_parent"
+            android:background="@color/BUTBG"
             android:layout_weight = "1"
             android:textSize = "60sp"/>
         <Button
             android:id = "@+id/button_31"
             android:layout_width = "0dp"
             android:layout_height = "match_parent"
+            android:background="@color/BUTBG"
             android:layout_weight = "1"
             android:textSize = "60sp"/>
         <Button
             android:id = "@+id/button_32"
+            android:background="@color/BUTBG"
             android:layout_width = "0dp"
             android:layout_height = "match_parent"
             android:layout_weight = "1"
@@ -185,8 +186,64 @@
         <Button
             android:id = "@+id/button_33"
             android:layout_width = "0dp"
+            android:background="@color/BUTBG"
             android:layout_height = "match_parent"
             android:layout_weight = "1"
             android:textSize = "60sp"/>
+
     </LinearLayout>
+    <RelativeLayout
+        android:layout_width = "match_parent"
+        android:layout_height="0dp"
+        android:layout_weight = "1">
+
+        <Button
+            android:id="@+id/button_up"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="179dp"
+            android:background="@drawable/arrow"
+            android:gravity="center_horizontal"
+            android:rotation="90"
+             />
+
+        <Button
+            android:id="@+id/button_down"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignBottom="@id/button_up"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="179dp"
+            android:layout_marginBottom="-57dp"
+            android:background="@drawable/arrow"
+            android:rotation="270" />
+
+        <Button
+            android:id="@+id/button_left"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignBottom="@id/button_up"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="-136dp"
+            android:layout_marginEnd="252dp"
+            android:layout_marginBottom="-57dp"
+            android:background="@drawable/arrow"
+             />
+
+        <Button
+            android:id="@+id/button_right"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignBottom="@id/button_up"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="-136dp"
+            android:layout_marginEnd="103dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="-57dp"
+            android:background="@drawable/arrow"
+            android:rotation="180"
+             />
+
+</RelativeLayout>
 </LinearLayout>

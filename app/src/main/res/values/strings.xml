@@ -2,5 +2,8 @@
     <string name="app_name">2048Project</string>
     <string name="action_settings">Settings</string>
     <color name="BG">#FFE5CC</color>
+    <color name="BUTBG">#D1975D</color>
+    <color name="SCOREBUTBG">#DAAC7E</color>
+
 
 </resources>
