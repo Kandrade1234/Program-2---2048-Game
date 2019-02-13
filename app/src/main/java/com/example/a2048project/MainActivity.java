@@ -10,13 +10,15 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
-
+import android.widget.TextView;
+import java.util.Arrays;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Button[][] buttons = new Button[4][4];
     private int [][] arr = new int[4][4];
+    private boolean [] flagArr = new boolean[4];
     private Button buttonNewGame;
     private int score;
     @Override
@@ -89,64 +91,79 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Random rand = new Random();
         row = rand.nextInt(4);
         col = rand.nextInt(4);
-        while(arr[row][col] != 0)
-        {
-            row = rand.nextInt(4);
-            col = rand.nextInt(4);
-        }
-        int two_four = rand.nextInt(4);
-
-        if (two_four == 0) {
-            buttons[row][col].setText("2");
-            arr[row][col] = 2;
-        }
-        else{
-            buttons[row][col].setText("4");
-            arr[row][col] = 4;
-        }
-        if(!singleGenerate) {
-            row2 = rand.nextInt(4);
-            col2 = rand.nextInt(4);
-            if ((row == row2) && (col == col2)) {
-                while ((row == row2) && (col == col2) && arr[row2][col2] != 0) {
-                    row2 = rand.nextInt(3);
-                    col2 = rand.nextInt(3);
-                }
+        //searchLose();
+        if(searchOpenSpot()) {
+            while (arr[row][col] != 0) {
+                row = rand.nextInt(4);
+                col = rand.nextInt(4);
             }
-            two_four = rand.nextInt(4);
-            if (two_four > 0) {
-                buttons[row2][col2].setText("2");
-                arr[row2][col2] = 2;
+            int two_four = rand.nextInt(4);
 
+            if (two_four == 0) {
+                buttons[row][col].setText("2");
+                arr[row][col] = 2;
             } else {
-                buttons[row2][col2].setText("4");
-                arr[row2][col2] = 4;
+                buttons[row][col].setText("4");
+                arr[row][col] = 4;
+            }
+            if (!singleGenerate) {
+                row2 = rand.nextInt(4);
+                col2 = rand.nextInt(4);
+                if ((row == row2) && (col == col2)) {
+                    while ((row == row2) && (col == col2) && arr[row2][col2] != 0) {
+                        row2 = rand.nextInt(3);
+                        col2 = rand.nextInt(3);
+                    }
+                }
+                two_four = rand.nextInt(4);
+                if (two_four > 0) {
+                    buttons[row2][col2].setText("2");
+                    arr[row2][col2] = 2;
+
+                } else {
+                    buttons[row2][col2].setText("4");
+                    arr[row2][col2] = 4;
+                }
             }
         }
     }
-
+    public boolean searchOpenSpot(){
+        boolean flag = false;
+        for(int i =0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                if(arr[i][j] == 0 ) flag = true;
+            }
+        }
+        return flag;
+    }
     public void restart(){
         finish();
         startActivity(getIntent());
     }
     public void left(){
         moveLeft();
-        mergeLeft();
+        boolean flag = mergeLeft();
+        flagArr[0] = flag;
+        searchLose();
         moveLeft();
     }
     public void right(){
         moveRight();
-        mergeRight();
+        boolean flag = mergeRight();
+        flagArr[1] = flag;
+        searchLose();
         moveRight();
     }
     public void up(){
         moveUp();
-        mergeUp();
+        boolean flag = mergeUp();
+        flagArr[2] = flag;
         moveUp();
     }
     public void down(){
         moveDown();
-        mergeDown();
+        boolean flag = mergeDown();
+        flagArr[3] = flag;
         moveDown();
     }
     public void moveLeft(){
@@ -165,23 +182,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }
             }
-            for(int index = 0; index < 4; index++) buttons[i][index].setText(""+arr[i][index]);
+           for(int index = 0; index < 4; index++) buttons[i][index].setText(""+arr[i][index]);
         }
     }
-    public void mergeLeft(){
+    public boolean mergeLeft(){
+        boolean flag = false;
         for(int i =0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 if(j < 3  && arr[i][j] == arr[i][j+1])
                 {
+                    flag = true;
                     arr[i][j] = arr[i][j] + arr[i][j+1];
                     arr[i][j+1] = 0;
                 }
             }
             for(int index = 0; index < 4; index++) buttons[i][index].setText(""+arr[i][index]);
-
         }
+        return flag;
     }
     public void moveRight(){
+
         for(int i =3; i >= 0; i--){
             for(int j = 3; j >= 0; j--) {
                 int track = j;
@@ -200,16 +220,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             for(int index = 0; index < 4; index++) buttons[i][index].setText(""+arr[i][index]);
         }
     }
-    public void mergeRight(){
+    public boolean mergeRight(){
+        boolean flag = false;
         for(int i =3; i >= 0; i--){
             for(int j = 3; j >= 0; j--) {
                     if (j > 0 && arr[i][j] == arr[i][j-1]) {
+                        flag = true;
                         arr[i][j] = arr[i][j] + arr[i][j - 1];
                         arr[i][j - 1] = 0;
                     }
             }
             for(int index = 0; index < 4; index++) buttons[i][index].setText(""+arr[i][index]);
         }
+        return flag;
     }
     public void moveUp(){
         for(int i =0; i < 4; i++){
@@ -230,17 +253,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             for(int index = 0; index < 4; index++) buttons[index][i].setText(""+arr[index][i]);
         }
     }
-    public void mergeUp(){
+    public boolean mergeUp(){
+        boolean flag = false;
         for(int i =0; i < 4; i++){
             for(int j = 0; j<4; j++) {
                 if (j < 3 && arr[j + 1][i] == arr[j][i])
                 {
+                    flag = true;
                     arr[j][i] = arr[j + 1][i] + arr[j][i];
                     arr[j+1][i] = 0;
                 }
             }
         for(int index = 0; index < 4; index++) buttons[index][i].setText(""+arr[index][i]);
         }
+        return flag;
       }
     public void moveDown(){
         for(int i =3; i >= 0; i--){
@@ -261,27 +287,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             for(int index = 0; index < 4; index++) buttons[index][i].setText(""+arr[index][i]);
         }
     }
-    public void mergeDown(){
+    public boolean mergeDown(){
+        boolean flag = false;
         for(int i =3; i >= 0; i--){
             for(int j = 3; j >= 0; j--)
             {
                 if (j > 0 && arr[j - 1] [i] == arr [j][i])
                 {
-                            arr[j][i] = arr[j - 1][i] + arr[j][i];
-                            arr[j-1][i] = 0;
+                    flag = true;
+                    arr[j][i] = arr[j - 1][i] + arr[j][i];
+                    arr[j-1][i] = 0;
                 }
             }
             for(int index = 0; index < 4; index++) buttons[index][i].setText(""+arr[index][i]);
         }
+        return flag;
     }
     public void searchForWin(){
         for(int i =0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                if(arr[i][j] == 8){ //change value if you want to see screen
+                if(arr[i][j] == 2048){ //change value if you want to see screen
                     Intent intent = new Intent(this, WinGame.class);
                     startActivity(intent);
                 }
             }
+        }
+    }
+    public void searchLose(){
+
+        if (!flagArr[0] && !flagArr[1] && !flagArr[2] && !flagArr[3]) {
+            Intent intent = new Intent(this, EndGame.class);
+            startActivity(intent);
         }
     }
     @Override

@@ -108,6 +108,8 @@
             android:background="@color/BUTBG"
             android:layout_weight = "1"
             android:textSize = "60sp"/>
+
+
         <Button
             android:id = "@+id/button_12"
             android:layout_width = "0dp"

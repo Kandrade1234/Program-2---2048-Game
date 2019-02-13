@@ -9,15 +9,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
-public class WinGame extends AppCompatActivity {
+public class EndGame extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_win_game);
-
+        setContentView(R.layout.activity_end_game);
         Button newGame = findViewById(R.id.restart);
-
         newGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,3 +33,4 @@ public class WinGame extends AppCompatActivity {
 
 
 }
+

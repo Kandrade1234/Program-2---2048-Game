@@ -10,9 +10,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".EndGame"
+            android:label="@string/title_activity_end_game"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".WinGame"
             android:label="@string/title_activity_win_game"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".gameWin"
+            android:label="@string/title_activity_game_win"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
