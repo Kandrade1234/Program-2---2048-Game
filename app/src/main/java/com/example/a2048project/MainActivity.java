@@ -1,5 +1,6 @@
 package com.example.a2048project;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button buttonLeft = findViewById(R.id.button_left);
         Button buttonRight = findViewById(R.id.button_right);
         buttonNewGame = findViewById(R.id.button_newGame);
-        generate();
+        generate(false);
         buttonNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,25 +48,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                up();
+                searchForWin();
+                generate(true);
             }
         });
         buttonDown.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
+                down();
+                searchForWin();
+                generate(true);
             }
         });
         buttonLeft.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 left();
+                searchForWin();
+                generate(true);
             }
         });
         buttonRight.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
+                right();
+                searchForWin();
+                generate(true);
             }
         });
 
@@ -75,12 +84,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v){
 
     }
-    public void generate(){
+    public void generate(boolean singleGenerate){
         int row,row2, col,col2;
         Random rand = new Random();
-        row = rand.nextInt(3);
-        col = rand.nextInt(3);
-        int two_four = rand.nextInt(3);
+        row = rand.nextInt(4);
+        col = rand.nextInt(4);
+        while(arr[row][col] != 0)
+        {
+            row = rand.nextInt(4);
+            col = rand.nextInt(4);
+        }
+        int two_four = rand.nextInt(4);
+
         if (two_four == 0) {
             buttons[row][col].setText("2");
             arr[row][col] = 2;
@@ -89,24 +104,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             buttons[row][col].setText("4");
             arr[row][col] = 4;
         }
-        row2 = rand.nextInt(3);
-        col2 = rand.nextInt(3);
-        if((row == row2) && (col == col2))
-        {
-            while((row == row2) && (col == col2)){
-                row2 = rand.nextInt(3);
-                col2 = rand.nextInt(3);
+        if(!singleGenerate) {
+            row2 = rand.nextInt(4);
+            col2 = rand.nextInt(4);
+            if ((row == row2) && (col == col2)) {
+                while ((row == row2) && (col == col2) && arr[row2][col2] != 0) {
+                    row2 = rand.nextInt(3);
+                    col2 = rand.nextInt(3);
+                }
             }
-        }
-        two_four = rand.nextInt(3);
-        if (two_four > 0){
-            buttons[row2][col2].setText("2");
-            arr[row2][col2] = 2;
+            two_four = rand.nextInt(4);
+            if (two_four > 0) {
+                buttons[row2][col2].setText("2");
+                arr[row2][col2] = 2;
 
-        }
-        else{
-            buttons[row2][col2].setText("4");
-            arr[row2][col2] = 4;
+            } else {
+                buttons[row2][col2].setText("4");
+                arr[row2][col2] = 4;
+            }
         }
     }
 
@@ -116,7 +131,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     public void left(){
         moveLeft();
-
+        mergeLeft();
+        moveLeft();
+    }
+    public void right(){
+        moveRight();
+        mergeRight();
+        moveRight();
+    }
+    public void up(){
+        moveUp();
+        mergeUp();
+        moveUp();
+    }
+    public void down(){
+        moveDown();
+        mergeDown();
+        moveDown();
     }
     public void moveLeft(){
         for(int i =0; i < 4; i++){
@@ -135,6 +166,122 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
             for(int index = 0; index < 4; index++) buttons[i][index].setText(""+arr[i][index]);
+        }
+    }
+    public void mergeLeft(){
+        for(int i =0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                if(j < 3  && arr[i][j] == arr[i][j+1])
+                {
+                    arr[i][j] = arr[i][j] + arr[i][j+1];
+                    arr[i][j+1] = 0;
+                }
+            }
+            for(int index = 0; index < 4; index++) buttons[i][index].setText(""+arr[i][index]);
+
+        }
+    }
+    public void moveRight(){
+        for(int i =3; i >= 0; i--){
+            for(int j = 3; j >= 0; j--) {
+                int track = j;
+                if(j < 3 && arr[i][j] != 0)
+                {
+                    while (track < 3 && arr[i][track] != 0) {
+                        if (arr[i][track + 1] == 0)
+                        {
+                            arr[i][track + 1] = arr[i][track];
+                            arr[i][track] = 0;
+                        }
+                        track++;
+                    }
+                }
+            }
+            for(int index = 0; index < 4; index++) buttons[i][index].setText(""+arr[i][index]);
+        }
+    }
+    public void mergeRight(){
+        for(int i =3; i >= 0; i--){
+            for(int j = 3; j >= 0; j--) {
+                    if (j > 0 && arr[i][j] == arr[i][j-1]) {
+                        arr[i][j] = arr[i][j] + arr[i][j - 1];
+                        arr[i][j - 1] = 0;
+                    }
+            }
+            for(int index = 0; index < 4; index++) buttons[i][index].setText(""+arr[i][index]);
+        }
+    }
+    public void moveUp(){
+        for(int i =0; i < 4; i++){
+            for(int j = 0; j<4; j++) {
+                int track = j;
+                if(j > 0 && arr[j][i] != 0)
+                {
+                    while (track > 0 && arr[track][i] != 0) {
+                        if (arr[track - 1][i] == 0)
+                        {
+                            arr[track - 1][i] = arr[track][i];
+                            arr[track][i] = 0;
+                        }
+                        track--;
+                    }
+                }
+            }
+            for(int index = 0; index < 4; index++) buttons[index][i].setText(""+arr[index][i]);
+        }
+    }
+    public void mergeUp(){
+        for(int i =0; i < 4; i++){
+            for(int j = 0; j<4; j++) {
+                if (j < 3 && arr[j + 1][i] == arr[j][i])
+                {
+                    arr[j][i] = arr[j + 1][i] + arr[j][i];
+                    arr[j+1][i] = 0;
+                }
+            }
+        for(int index = 0; index < 4; index++) buttons[index][i].setText(""+arr[index][i]);
+        }
+      }
+    public void moveDown(){
+        for(int i =3; i >= 0; i--){
+            for(int j = 3; j >= 0; j--) {
+                int track = j;
+                if(j < 3 && arr[j][i] != 0)
+                {
+                    while (track < 3 && arr[track][i] != 0) {
+                        if (arr[track+1][i] == 0)
+                        {
+                            arr[track + 1][i] = arr[track][i];
+                            arr[track][i] = 0;
+                        }
+                        track++;
+                    }
+                }
+            }
+            for(int index = 0; index < 4; index++) buttons[index][i].setText(""+arr[index][i]);
+        }
+    }
+    public void mergeDown(){
+        for(int i =3; i >= 0; i--){
+            for(int j = 3; j >= 0; j--)
+            {
+                if (j > 0 && arr[j - 1] [i] == arr [j][i])
+                {
+                            arr[j][i] = arr[j - 1][i] + arr[j][i];
+                            arr[j-1][i] = 0;
+                }
+            }
+            for(int index = 0; index < 4; index++) buttons[index][i].setText(""+arr[index][i]);
+        }
+    }
+    public void searchForWin(){
+        for(int i =0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                if(arr[i][j] == 8){ //change value if you want to see screen
+                    Intent intent = new Intent(this, WinGame.class);
+                    startActivity(intent);
+                }
+            }
         }
     }
     @Override
