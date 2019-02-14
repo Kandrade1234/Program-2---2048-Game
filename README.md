@@ -1,5 +1,5 @@
 # Program-2---2048-Game
-
+By Kevin Andrade--
 Can you win and get the 2048th tile? Sure you can! This puzzle game is intended to get your brain cells going, and with enough time and practice you will eventually become a pro!
 
 This app is made on android studio, dedicated for android platforms. There are a bunch of techniques and tools used in this program, such as button animations, background music, a score tracker, matrix manipulation,  a pretty background, and so on!
