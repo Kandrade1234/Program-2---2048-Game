@@ -1,6 +1,7 @@
 package com.example.a2048project;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,13 +10,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import java.util.Arrays;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-
+    MediaPlayer bg;
     private Button[][] buttons = new Button[4][4];
     private int [][] arr = new int[4][4];
     private boolean [] flagArr = new boolean[4];
@@ -35,48 +38,67 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 arr[i][j] = 0;
             }
         }
-        Button buttonUp = findViewById(R.id.button_up);
-        Button buttonDown = findViewById(R.id.button_down);
-        Button buttonLeft = findViewById(R.id.button_left);
-        Button buttonRight = findViewById(R.id.button_right);
+        for(int i = 0; i < 4; i++) flagArr[i] = true;
+        bg = MediaPlayer.create(MainActivity.this, R.raw.bgmusic);
+        bg.start();
+        final Button buttonDown = findViewById(R.id.button_down);
+        final Button buttonLeft = findViewById(R.id.button_left);
+        final Button buttonRight = findViewById(R.id.button_right);
+        final Button buttonScore = findViewById(R.id.button_score);
+        final Button buttonUp = findViewById(R.id.button_up);
         buttonNewGame = findViewById(R.id.button_newGame);
         generate(false);
         buttonNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                bg.pause();
+                Animation animationFade = AnimationUtils.loadAnimation(MainActivity.this, R.anim.fadein);
+                buttonNewGame.startAnimation(animationFade);
                 restart();
             }
         });
         buttonUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Animation animationFade = AnimationUtils.loadAnimation(MainActivity.this, R.anim.fadein);
+                buttonUp.startAnimation(animationFade);
                 up();
                 searchForWin();
                 generate(true);
+                buttonScore.setText("Score\n" + score);
             }
         });
         buttonDown.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                Animation animationFade = AnimationUtils.loadAnimation(MainActivity.this, R.anim.fadein);
+                buttonDown.startAnimation(animationFade);
                 down();
                 searchForWin();
                 generate(true);
+                buttonScore.setText("Score\n" + score);
             }
         });
         buttonLeft.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                Animation animationFade = AnimationUtils.loadAnimation(MainActivity.this, R.anim.fadein);
+                buttonLeft.startAnimation(animationFade);
                 left();
                 searchForWin();
                 generate(true);
+                buttonScore.setText("Score\n" + score);
             }
         });
         buttonRight.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                Animation animationFade = AnimationUtils.loadAnimation(MainActivity.this, R.anim.fadein);
+                buttonRight.startAnimation(animationFade);
                 right();
                 searchForWin();
                 generate(true);
+                buttonScore.setText("Score\n" + score);
             }
         });
 
@@ -192,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(j < 3  && arr[i][j] == arr[i][j+1])
                 {
                     flag = true;
-                    arr[i][j] = arr[i][j] + arr[i][j+1];
+                    score += arr[i][j] = arr[i][j] + arr[i][j+1];
                     arr[i][j+1] = 0;
                 }
             }
@@ -226,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             for(int j = 3; j >= 0; j--) {
                     if (j > 0 && arr[i][j] == arr[i][j-1]) {
                         flag = true;
-                        arr[i][j] = arr[i][j] + arr[i][j - 1];
+                        score += arr[i][j] = arr[i][j] + arr[i][j - 1];
                         arr[i][j - 1] = 0;
                     }
             }
@@ -260,7 +282,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (j < 3 && arr[j + 1][i] == arr[j][i])
                 {
                     flag = true;
-                    arr[j][i] = arr[j + 1][i] + arr[j][i];
+                    score += arr[j][i] = arr[j + 1][i] + arr[j][i];
                     arr[j+1][i] = 0;
                 }
             }
@@ -295,7 +317,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (j > 0 && arr[j - 1] [i] == arr [j][i])
                 {
                     flag = true;
-                    arr[j][i] = arr[j - 1][i] + arr[j][i];
+                    score += arr[j][i] = arr[j - 1][i] + arr[j][i];
                     arr[j-1][i] = 0;
                 }
             }
@@ -307,6 +329,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for(int i =0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 if(arr[i][j] == 2048){ //change value if you want to see screen
+                    bg.pause();
                     Intent intent = new Intent(this, WinGame.class);
                     startActivity(intent);
                 }
@@ -316,6 +339,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void searchLose(){
 
         if (!flagArr[0] && !flagArr[1] && !flagArr[2] && !flagArr[3]) {
+            bg.pause();
             Intent intent = new Intent(this, EndGame.class);
             startActivity(intent);
         }
